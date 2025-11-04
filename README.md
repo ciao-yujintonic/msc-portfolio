@@ -5,7 +5,6 @@
 > It includes structured notes on foundational mathematics / algorithms  
 > and small hands-on coding projects related to graphics & visualization.
 
----
 
 ## 🎯 Goal
 Strengthen core knowledge required for graduate-level coursework in:
