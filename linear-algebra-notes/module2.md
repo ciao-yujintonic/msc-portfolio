@@ -71,3 +71,8 @@ b1·b2 = 0 => orthogonal
   we must use **matrices** to transform coordinates.
 
 ---
+
+
+## Vector Operations Assignment
+![IMG_0222](https://github.com/user-attachments/assets/9b9782be-4700-4678-973c-ef00438e56df)
+![IMG_0223](https://github.com/user-attachments/assets/397e6525-ce2e-47b3-832c-6cf9a00e2d19)
