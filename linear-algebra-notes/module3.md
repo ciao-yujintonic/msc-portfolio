@@ -66,3 +66,7 @@
   - Columns dependent -> space collapses (e.g., plane -> line)
   - No unique solution (none or infinite)
 - Inverse of 2×2 uses det in denominator
+
+### Using matrices to make transformations practice
+<img width="1668" height="2154" alt="image" src="https://github.com/user-attachments/assets/044d85d5-0f57-44e7-8475-a24df4232939" />
+
