@@ -32,6 +32,9 @@ By subsituting the parametric ray equation into an object's equation for example
 - Ray-sphere intersection becomes solving a simple quadratic equation
 - Ray-plane intersection becoems solving a linear equation
 
+> This image helped me understand how the image is created
+<img width="741" height="443" alt="image" src="https://github.com/user-attachments/assets/c94dbfe0-1dd7-43a9-b399-6bdb56400bc0" />
+
 > ### 1. Sphere equation
 > A sphere is defined as `All points that are at a fixed distance R from the center C.`
 >
@@ -101,6 +104,8 @@ Before applying any lighting model, I rendered the scene using normal-based colo
 Each component of the surface normal lies in [-1, 1]. By converting this range into [0,1]: color = 0.5*(N+1)
 The sphere appears in a rainbow gradient. This step intentionally ignores the object's material color (Vec3(0.8, 0.3, 0.3))
 because the goal is to visually confirm that normals look correct before moving on to actual lighting.
+
+<img width="600" height="336" alt="image" src="https://github.com/user-attachments/assets/405a2ee9-dc0b-4bd3-9acb-b4cb751c96e6" />
 
 ## Summary
 This project is not only about code implementation, I pursued to understand why the formulas come up one by one.
