@@ -86,13 +86,14 @@ TBU
 ---
 
 ## 📁 Repository Structure
-
+```
 msc-portfolio/
 ├── algorithms-part (coursera notes and assignments)
 ├── linear-algebra-notes (coursera notes and practices)
 └── mini-projects/
-    │   ├── ray-tracer (minimal ray tracer built from scratch to learn rendering fundamentals)
-    │   └── TBU
+    ├── ray-tracer (minimal ray tracer built from scratch to learn rendering fundamentals)
+    └── TBU
+```
 
 ---
 
