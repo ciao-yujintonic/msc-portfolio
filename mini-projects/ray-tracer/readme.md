@@ -1,9 +1,10 @@
-## What is Ray Equation?
+## Concepts
+### What is Ray Equation?
 > P(t) = O + t * D
 
 This is not invented by computer graphics, it is actually a classic parametric equation of a line in gemometry.
 
-### Point : A ray is a line
+#### Point : A ray is a line
 A ray is a line that starts at one point and extends infintely in one direction.
 Mathematically, we need a way to represent "every point along a line in a given direction".
 
@@ -71,9 +72,51 @@ By subsituting the parametric ray equation into an object's equation for example
 > - Solve for `t` : the intersection distance
 
 
+## Project Structure
+- vec3.py : vector calculation, geometry calculation based
+- ray.py : ray origin, direction
+- sphere.py : ray-sphre hit test
+- camera.py : position of camera, viewport, ray generation logic
+- main.py : all rendering loops, background and hit color
 
+## What I focused on
+this project wasn't just about getting an image to render.
+I wanted to understand why each formula and step existed, so I spent time breaking down the math and the gemetroy behind the code line by line.
+- Ray Equation
+At first, the ray equation ```P(t) = O+ tD``` felt like something I should just accept, but it finally clicked when I realized it's simply
+"a line starting from the camera and extending in one direction."
+Once I internalized this geometric interpretation, the rest of the calculations naturally followed.
+- Half-b Discriminant
+The original quadratic form uses ```b = 2(oc·D)```, but many rac tracers use the simplified half-b version.
+I wondered why until I drived it myself, it removes unnecessary factors of 2 and makes the equation cleaner and faster especially in C++.
+Instead of memorizing it, I wanted to understand the optimization.
+- Normal Calculation
+I questioned why normal vectors for spheres don't call ```.unit()``` and instead use (P-C)/R.
+Later, I realized that any point on a phere is exactly R units away from the center, so (P-C) has length R.
+Dividing by the radius immediately gives a unit normal without computing a square root. This was the moment where the geometry simplified the math.
+
+### Normal Visualization
+Before applying any lighting model, I rendered the scene using normal-based coloring to verify that ray-object intersections and normal calculations were correct.
+
+Each component of the surface normal lies in [-1, 1]. By converting this range into [0,1]: color = 0.5*(N+1)
+The sphere appears in a rainbow gradient. This step intentionally ignores the object's material color (Vec3(0.8, 0.3, 0.3))
+because the goal is to visually confirm that normals look correct before moving on to actual lighting.
+
+## Summary
+This project is not only about code implementation, I pursued to understand why the formulas come up one by one.
+It's just a small ray tracer, but was a sifnificant practice to develop all the fundamental factors of graphics (vector, intersections, normal, camera, shading) by my own.
+
+## Next steps
+- [ ] Implement Lambert diffuse shading  
+- [ ] Add shadow rays for occlusion
+- [ ] Add reflections (mirror-like surfaces)  
+- [ ] Add refraction (glass/dielectric materials)  
+- [ ] Introduce anti-aliasing (multiple rays per pixel)  
+- [ ] Add a material system (matte, metal, dielectric)  
+- [ ] Implement Depth of Field using a thin-lens camera model
 
 
 > References <br/>
 > https://www.scratchapixel.com/ <br/>
-> https://raytracing.github.io/books/RayTracingInOneWeekend.html
+> https://raytracing.github.io/books/RayTracingInOneWeekend.html <br/>
+> Questions that I was curious about to ChatGPT 
