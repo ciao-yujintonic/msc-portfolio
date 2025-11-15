@@ -154,7 +154,7 @@ This project is not only about code implementation, I pursued to understand why 
 It's just a small ray tracer, but was a sifnificant practice to develop all the fundamental factors of graphics (vector, intersections, normal, camera, shading) by my own.
 
 ## Next steps
-- [ ] Implement Lambert diffuse shading  
+- [x] Implement Lambert diffuse shading  
 - [ ] Add shadow rays for occlusion
 - [ ] Add reflections (mirror-like surfaces)  
 - [ ] Add refraction (glass/dielectric materials)  
