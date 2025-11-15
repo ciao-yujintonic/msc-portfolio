@@ -23,8 +23,6 @@ The most natural and widely used representation is the parametric form of line
 It means (1) small `t` points close to the camera, and (2) large `t` points fartehr away.
 So when a ray intersects multiple objects, the object with the smallest positive `t` is the one that appears in the final image.
 
-=> This is how real light works that the surface your eye sees first is the one closest along that direction.
-
 #### 2. intersection math is simple
 Ray tracing is about a repetitive question to check ```if this ray hit the object? then at what t?```
 
@@ -42,7 +40,7 @@ By subsituting the parametric ray equation into an object's equation for example
 >
 > In math: ```|P - C| = R```
 >
-> Squaring both sides: ```|P -C|^2 = R^2```
+> Squaring both sides: ```|P -C|^2 = R^2``` to simplify √(Px - Cx)^2 + (Py - Cy)^2 + (Pz - Cz)^2 without the square root
 >
 > - P : any point on the sphere
 > - C : sphere center
@@ -116,15 +114,21 @@ how much of the incoming light is reflected at each RGB channel.
 ## What I focused on
 this project wasn't just about getting an image to render.
 I wanted to understand why each formula and step existed, so I spent time breaking down the math and the gemetroy behind the code line by line.
+
 - Ray Equation
+
 At first, the ray equation ```P(t) = O+ tD``` felt like something I should just accept, but it finally clicked when I realized it's simply
 "a line starting from the camera and extending in one direction."
 Once I internalized this geometric interpretation, the rest of the calculations naturally followed.
+
 - Half-b Discriminant
+
 The original quadratic form uses ```b = 2(oc·D)```, but many rac tracers use the simplified half-b version.
 I wondered why until I drived it myself, it removes unnecessary factors of 2 and makes the equation cleaner and faster especially in C++.
 Instead of memorizing it, I wanted to understand the optimization.
+
 - Normal Calculation
+
 I questioned why normal vectors for spheres don't call ```.unit()``` and instead use (P-C)/R.
 Later, I realized that any point on a phere is exactly R units away from the center, so (P-C) has length R.
 Dividing by the radius immediately gives a unit normal without computing a square root. This was the moment where the geometry simplified the math.
@@ -139,7 +143,7 @@ Once the concepts are fully internalized, they can be transferred to C++ easily.
 ### Normal Visualization
 Before applying any lighting model, I rendered the scene using normal-based coloring to verify that ray-object intersections and normal calculations were correct.
 
-Each component of the surface normal lies in [-1, 1]. By converting this range into [0,1]: color = 0.5*(N+1)
+Each component of the surface normal lies in [-1, 1]. By converting this range into [0,1]: color = 0.5*(N+1) to map into RGB channel.
 The sphere appears in a rainbow gradient. This step intentionally ignores the object's material color (Vec3(0.8, 0.3, 0.3))
 because the goal is to visually confirm that normals look correct before moving on to actual lighting.
 
