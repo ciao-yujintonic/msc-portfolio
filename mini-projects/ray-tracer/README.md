@@ -34,6 +34,9 @@ By subsituting the parametric ray equation into an object's equation for example
 
 > This image helped me understand how the image is created
 <img width="741" height="443" alt="image" src="https://github.com/user-attachments/assets/c94dbfe0-1dd7-43a9-b399-6bdb56400bc0" />
+> https://www.scratchapixel.com/index.html
+
+
 
 > ### 1. Sphere equation
 > A sphere is defined as `All points that are at a fixed distance R from the center C.`
@@ -74,6 +77,35 @@ By subsituting the parametric ray equation into an object's equation for example
 > Subsitute P(t) = ```N · ((O + tD) - P0) = 0```
 > - Solve for `t` : the intersection distance
 
+## (Added) Lambert diffuse shading
+Lambert diffuse shading models how light interacts with a rough, matte surface.
+It assumes that the surface reflects incoming light equally in all direction, regardless of the viewer's position.
+Because the reflection is perfely uniform, the only factor that determines brightness is **the angle** between the light direction and the surface normal.
+
+This idea is a fundamental physical rule which is very obvious in the real world.
+> A surface appears brightest when it faces the light directly, and darker as it tilts away from the light.
+
+Geometrically, this behavior is captured by the cosine of the angle between the surface normal N and the light direction L
+```cosθ = N ⋅ L```
+- θ = 0deg : surface faces the light -> cosθ = 1 => brightest
+- θ = 90deg : light grazes the surface -> cosθ = 0 => no brightness
+- θ > 90deg : light hits from behind -> negative => consider as 0
+
+This creates the core Lambert shading equation
+> Diffuse Brightness = max(0, N ⋅ L)
+
+The final surface color combines the material's albedo (its inherent color) with this brightness factor
+> Color = Albedo * max(0, N ⋅ L)
+
+```
+** Albedo
+In Lambert diffuse shading, albedo represents the maerial's intrinsic color 
+how much of the incoming light is reflected at each RGB channel.
+```
+
+
+---
+
 
 ## Project Structure
 - vec3.py : vector calculation, geometry calculation based
@@ -98,6 +130,13 @@ I questioned why normal vectors for spheres don't call ```.unit()``` and instead
 Later, I realized that any point on a phere is exactly R units away from the center, so (P-C) has length R.
 Dividing by the radius immediately gives a unit normal without computing a square root. This was the moment where the geometry simplified the math.
 
+### Why Python instead of C++?
+Peter Shirley’s “Ray Tracing in One Weekend” is written in C++, but I chose to implement the project in Python.
+The goal of this mini-project is to understand the fundamentals of ray tracing including vector math, ray–object intersections, normals, and shading.
+and Python allows me to iterate faster without compiler overhead or language boilerplate and I'm more used to it than C++.
+Once the concepts are fully internalized, they can be transferred to C++ easily.
+
+
 ### Normal Visualization
 Before applying any lighting model, I rendered the scene using normal-based coloring to verify that ray-object intersections and normal calculations were correct.
 
@@ -120,8 +159,22 @@ It's just a small ray tracer, but was a sifnificant practice to develop all the 
 - [ ] Add a material system (matte, metal, dielectric)  
 - [ ] Implement Depth of Field using a thin-lens camera model
 
+### Implement Lambert diffuse shading
+#### What I Focuse On
+- Normalizing the light direction vector
+
+I realized that using an unnormalized light direction distorts shading because the dot product is scaled by the vector’s length. Normalizing the light vector ensures the dot product truly represents the angle between the light and the surface.
+- Why the ground became completely dark
+
+Lambert shading clamps negative values to 0, so any surface that faces away from the light is fully dark.
+This helped me understand the limitation of direct illumination and why real scenes require indirect light to avoid pure black shadows.
+
+```=> To enhance this limitation of Lmabert diffuse, we need add concepts of indirect light and ambient light```
+
+<br/><br/><br/>
+
 
 > References <br/>
-> https://www.scratchapixel.com/ <br/>
 > https://raytracing.github.io/books/RayTracingInOneWeekend.html <br/>
+> https://www.scratchapixel.com/ <br/>
 > Questions that I was curious about to ChatGPT 

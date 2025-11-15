@@ -14,7 +14,11 @@ class Vec3:
 
     def __mul__(self, t):
         return Vec3(self.x * t, self.y * t, self.z * t)
+    
+    def __truediv__(self, t):
+        return Vec3(self.x / t, self.y / t, self.z / t)
 
+    # make 2 * v behave the same as v * 2 (Python calls __rmul__ for reversed operands)
     __rmul__ = __mul__
 
     def dot(self, other):

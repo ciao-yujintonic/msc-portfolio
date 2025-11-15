@@ -21,9 +21,20 @@ def ray_color(ray, world):
 
     if hit_anything:
         N = hit_anything.normal
+        # Version 1
         # N.x, N.y, N.z ∈ [-1, +1] -> N.x+1, N.y+1, N.z+1 ∈ [0, 2] -> 0.5*(N.x+1), 0.5*(N.y+1), 0.5*(N.z+1) ∈ [0,1] => RGB
         # But this doesn't represent the sphere's real color
-        return Vec3(0.5*(N.x + 1), 0.5*(N.y + 1), 0.5*(N.z + 1))
+        #return Vec3(0.5*(N.x + 1), 0.5*(N.y + 1), 0.5*(N.z + 1))
+        
+        # Version 2 - basic Lambert
+        # direction of light is top-right-front
+        # Directional light vectors must be normalized because Lambert diffuse uses the dot product N⋅L to represent the cosine of the angle between N and L
+        # This cosine relationship only works when both vectors have unit length.
+        # otherwise, the dot product is scaled by its magnitude, producing incorrect brightness values.
+        # For example, in case of Vec3(1,1,1), its length is sqrt(3) ≈ 1.732, so this would make the surface appear 1.732 times brighter than intended.
+        light_dir = Vec3(1,1,1).unit()
+        diff = max(0.0, N.dot(light_dir))
+        return hit_anything.color * diff;
 
     # ray didn't hit anything, return the background color
     unit_dir = ray.direction.unit()
@@ -69,7 +80,7 @@ def main():
             color = ray_color(ray, world).to_color()
             image.putpixel((i, j), color)
 
-    image.save("image_focal3.png")
+    image.save("image_lambert_diffuse.png")
     print("렌더링 완료 → image.png 저장됨!")
 
 if __name__ == "__main__":
