@@ -160,14 +160,23 @@ It's just a small ray tracer, but was a sifnificant practice to develop all the 
 - [ ] Implement Depth of Field using a thin-lens camera model
 
 ### Implement Lambert diffuse shading
+After this, the sphere finally represents its own color with the light.
+<img width="596" height="338" alt="image" src="https://github.com/user-attachments/assets/d905e9ab-5466-44f4-a744-fc0050b47d6b" />
+
 #### What I Focuse On
 - Normalizing the light direction vector
 
 I realized that using an unnormalized light direction distorts shading because the dot product is scaled by the vector’s length. Normalizing the light vector ensures the dot product truly represents the angle between the light and the surface.
+<img width="416" height="237" alt="image" src="https://github.com/user-attachments/assets/0ccd4b2b-7af3-4c59-8716-6ab705e74b06" />
+
 - Why the ground became completely dark
 
 Lambert shading clamps negative values to 0, so any surface that faces away from the light is fully dark.
 This helped me understand the limitation of direct illumination and why real scenes require indirect light to avoid pure black shadows.
+> This is what happens when I set the light vector as Vec3(1,0,0).
+> The ground : P = (0, -0.5, -1), C = (0, 100.5, -1) P-C = (0,100,0) => N = (0,1,0)
+> N · L = 0*1 + 1*0 + 0*0 = 0 -> cosθ = 0 (black)
+<img width="422" height="241" alt="image" src="https://github.com/user-attachments/assets/7957683d-deff-4f02-a5e3-c836b0341892" />
 
 ```=> To enhance this limitation of Lmabert diffuse, we need add concepts of indirect light and ambient light```
 
