@@ -32,9 +32,8 @@ By subsituting the parametric ray equation into an object's equation for example
 - Ray-sphere intersection becomes solving a simple quadratic equation
 - Ray-plane intersection becoems solving a linear equation
 
-> This image helped me understand how the image is created
-<img width="741" height="443" alt="image" src="https://github.com/user-attachments/assets/c94dbfe0-1dd7-43a9-b399-6bdb56400bc0" />
-> https://www.scratchapixel.com/index.html
+> This image helped me understand how the image is created https://www.scratchapixel.com/index.html
+> <img width="741" height="443" alt="image" src="https://github.com/user-attachments/assets/c94dbfe0-1dd7-43a9-b399-6bdb56400bc0" />
 
 
 
