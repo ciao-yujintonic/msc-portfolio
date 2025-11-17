@@ -189,4 +189,3 @@ This helped me understand the limitation of direct illumination and why real sce
 > References <br/>
 > https://raytracing.github.io/books/RayTracingInOneWeekend.html <br/>
 > https://www.scratchapixel.com/ <br/>
-> Questions that I was curious about to ChatGPT 
