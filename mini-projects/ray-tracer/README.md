@@ -206,6 +206,7 @@ This helped me understand the limitation of direct illumination and why real sce
 
 ### Add shadow rays for occlusion
 This step led the sphere to have shadow on itself and the ground as well.
+<img width="598" height="339" alt="image" src="https://github.com/user-attachments/assets/fec9ece6-1981-469e-b305-b1600a0edf27" />
 
 
 #### What I Was Confused About
