@@ -175,7 +175,7 @@ It's just a small ray tracer, but was a sifnificant practice to develop all the 
 
 ## Next steps
 - [x] Implement Lambert diffuse shading  
-- [ ] Add shadow rays for occlusion
+- [x] Add shadow rays for occlusion
 - [ ] Add reflections (mirror-like surfaces)  
 - [ ] Add refraction (glass/dielectric materials)  
 - [ ] Introduce anti-aliasing (multiple rays per pixel)  
