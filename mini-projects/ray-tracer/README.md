@@ -100,6 +100,26 @@ In Lambert diffuse shading, albedo represents the maerial's intrinsic color
 how much of the incoming light is reflected at each RGB channel.
 ```
 
+## (Added) Shadow rays
+In ray tracing, shadow is a simple geometric solve.
+A question ```At what point P can the light source be seen?``` can generate shadow easily.
+
+From `Lambert diffuse shading`, the equation, which is `diffuse = max(0, N ⋅ L)` only holds true under the assumption that light actually reaches a point.
+So, we need to shoot another ray from point P towards the light source and check whether that ray is blocked by any other object.
+
+Mathematically, creating shadow ray from the P is :
+```
+rshadow(t) = P + ϵN + tL(hat)
+```
+- ϵ : small value (1e-4) for floating-point correction
+- P + ϵN : offset, to avoid self-intersection
+- L(hat) : Unit vector in the direction of the light source
+
+And shadow ray intersects with an object before reaching to the light source, this point is in the shadow.
+```∃t ∈ (0,d(P,L)) : rshadow(t) intersects an object```
+- d(P,L) : distance from P to the light source (Point light)
+
+Finally, if the point is shadow, the brightness is 0, otherwise apply Lambert diffuse.
 
 ---
 
@@ -182,6 +202,22 @@ This helped me understand the limitation of direct illumination and why real sce
 <img width="422" height="241" alt="image" src="https://github.com/user-attachments/assets/7957683d-deff-4f02-a5e3-c836b0341892" />
 
 ```=> To enhance this limitation of Lmabert diffuse, we need add concepts of indirect light and ambient light```
+
+
+### Add shadow rays for occlusion
+This step led the sphere to have shadow on itself and the ground as well.
+
+
+#### What I Was Confused About
+At first, I couldn't understand why the shadow rays go toward the light source to check whether the P is in shadow or not.
+Because I thought the shadow meant something behind the object from the direction of the light.
+I realized that I need to think about all `P`s on the sphere, so the shadow is also on the sphere.
+From this thought process, I understood the ground sphere which is under the red sphere also creates shadow rays towards the light source, and it creates the shadow under the red sphere.
+
+---
+
+### Add shadow rays for occlusion
+
 
 <br/><br/><br/>
 

@@ -32,9 +32,37 @@ def ray_color(ray, world):
         # This cosine relationship only works when both vectors have unit length.
         # otherwise, the dot product is scaled by its magnitude, producing incorrect brightness values.
         # For example, in case of Vec3(1,1,1), its length is sqrt(3) ≈ 1.732, so this would make the surface appear 1.732 times brighter than intended.
-        light_dir = Vec3(1,1,1).unit()
-        diff = max(0.0, N.dot(light_dir))
-        return hit_anything.color * diff;
+        # light_dir = Vec3(1,1,1).unit()
+        # diff = max(0.0, N.dot(light_dir))
+        # return hit_anything.color * diff;
+        
+        # Version 3 - shadow
+        # Ray Equation
+        P = ray.origin + ray.direction * hit_anything.t;
+        # direction of light same as Version 2 - Lambert diffuse
+        light_dir = Vec3(1,1,1).unit();
+        # avoid floating-point precision issue by offsetting the shadow ray origin a bit along the normal
+        shadow_origin = P+N * 1e-4
+        # new ray from the hit point to the light source
+        shadow_ray = Ray(shadow_origin, light_dir)
+        in_shadow = False
+        for obj in world:
+            # check if the shadow ray hits any object
+            shadow_hit = obj.hit(shadow_ray, t_min, t_max)
+            # if it hits something, the point is in shadow
+            if shadow_hit:
+                in_shadow = True
+                break
+        
+        # if it's in shadow diffuse component is 0
+        if in_shadow:
+            diff = 0.0
+        # otherwise, calculate as Lambert diffuse
+        else:
+            diff = max(0.0, N.dot(light_dir))
+        
+        return hit_anything.color * diff
+            
 
     # ray didn't hit anything, return the background color
     unit_dir = ray.direction.unit()
@@ -80,7 +108,7 @@ def main():
             color = ray_color(ray, world).to_color()
             image.putpixel((i, j), color)
 
-    image.save("image_lambert_diffuse.png")
+    image.save("image_shadow.png")
     print("렌더링 완료 → image.png 저장됨!")
 
 if __name__ == "__main__":
