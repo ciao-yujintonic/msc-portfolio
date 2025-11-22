@@ -217,8 +217,6 @@ From this thought process, I understood the ground sphere which is under the red
 
 ---
 
-### Add shadow rays for occlusion
-
 
 <br/><br/><br/>
 
