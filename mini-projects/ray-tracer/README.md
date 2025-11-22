@@ -175,7 +175,7 @@ It's just a small ray tracer, but was a sifnificant practice to develop all the 
 
 ## Next steps
 - [x] Implement Lambert diffuse shading  
-- [ ] Add shadow rays for occlusion
+- [x] Add shadow rays for occlusion
 - [ ] Add reflections (mirror-like surfaces)  
 - [ ] Add refraction (glass/dielectric materials)  
 - [ ] Introduce anti-aliasing (multiple rays per pixel)  
@@ -206,6 +206,7 @@ This helped me understand the limitation of direct illumination and why real sce
 
 ### Add shadow rays for occlusion
 This step led the sphere to have shadow on itself and the ground as well.
+<img width="598" height="339" alt="image" src="https://github.com/user-attachments/assets/fec9ece6-1981-469e-b305-b1600a0edf27" />
 
 
 #### What I Was Confused About
@@ -215,8 +216,6 @@ I realized that I need to think about all `P`s on the sphere, so the shadow is a
 From this thought process, I understood the ground sphere which is under the red sphere also creates shadow rays towards the light source, and it creates the shadow under the red sphere.
 
 ---
-
-### Add shadow rays for occlusion
 
 
 <br/><br/><br/>
