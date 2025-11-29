@@ -1,10 +1,11 @@
-# Visual & Interactive Computing – Study & Project Repo
+# Visual Computing – Study & Project Repo
 
 > This repository documents my self-directed preparation for graduate studies in  
-> **Computer Graphics, Visual Computing, and Human–Computer Interaction.**  
+> **Computer Graphics, and Visual Computing**  
 > It includes structured notes on foundational mathematics / algorithms  
 > and small hands-on coding projects related to graphics & visualization.
 
+Although I have extensive industry experience, I am unable to disclose detailed information about my work in a public repository due to confidentiality restrictions.
 
 ## 🎯 Goal
 Strengthen core knowledge required for graduate-level coursework in:
