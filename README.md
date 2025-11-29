@@ -31,9 +31,9 @@ My focus is on **learning by doing** — combining theory + practice.
 
 ---
 
-## ✅ What’s Inside
+## What’s Inside
 
-### 📘 1) Linear Algebra Notes
+### 1) Linear Algebra Notes
 - course : Mathematics for Machine Learning: Linear Algebra by Imperial College London
 - Study notes summarizing core concepts  
 - Short proof sketches & example calculations
@@ -44,7 +44,7 @@ My focus is on **learning by doing** — combining theory + practice.
 
 ---
 
-### ⚙️ 2) Algorithms Notes
+### 2) Algorithms Notes
 - course : Algorithms, Part I by Princeton University
 - Notes on algorithmic concepts & patterns
 - Complexity analysis
@@ -59,7 +59,7 @@ Focus topics:
 
 ---
 
-### 🎨 3) Computer Graphics Mini-Projects
+### 3) Computer Graphics Mini-Projects
 Small experiments implementing graphics techniques.
 
 
@@ -71,17 +71,15 @@ Small experiments implementing graphics techniques.
 
 | Area | Status |
 |------|--------|
-| Linear Algebra | ✅ In progress |
+| Linear Algebra | ☑️ Done (needs to update notes) |
 | Algorithms | ✅ In progress |
 | Mini-graphics projects | ✅ In progress |
-
-I update this repository daily with notes & experiments.
 
 ---
 
 ## 🚀 Roadmap (Next Steps)
 
-TBU
+Enhance mini projects
 
 ---
 
@@ -92,18 +90,16 @@ msc-portfolio/
 ├── linear-algebra-notes (coursera notes and practices)
 └── mini-projects/
     ├── ray-tracer (minimal ray tracer built from scratch to learn rendering fundamentals)
-    └── TBU
+    └── webgl-fundamentals (studies of foundations of WebGL)
 ```
 
 ---
 
 ## 🛠️ Tech Stack
 
-- Python / NumPy
+- Python
 - Java
-- C++ (optional)
 - WebGL / Three.js (future plan)
-- Jupyter Notebook
 - Markdown
 
 ---
