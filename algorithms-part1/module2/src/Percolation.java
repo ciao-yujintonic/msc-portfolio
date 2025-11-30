@@ -1,115 +1,99 @@
-
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
 
-    private int n;
-    private boolean[] open;
-    private WeightedQuickUnionUF uf;
-    private WeightedQuickUnionUF ufFull;
-    private int top;
-    private int bottom;
+    private final int n;
+    private final boolean[] open;
+    private final WeightedQuickUnionUF uf;
+    private final WeightedQuickUnionUF uf_backwash;
+    private final int virtualTop;
+    private final int virtualBottom;
     private int openCount;
 
-    // creates n-by-n grid, with all sites initially blocked
+    // Creates n-by-n grid
     public Percolation(int n) {
-        if (n <= 0) {
-            throw new IllegalArgumentException();
-        }
+        if (n <= 0) throw new IllegalArgumentException();
 
         this.n = n;
-        open = new boolean[n * n];
+        this.open = new boolean[n * n];
+        this.uf = new WeightedQuickUnionUF(n * n + 2);      // top + bottom
+        this.uf_backwash = new WeightedQuickUnionUF(n * n + 1); // only top
 
-        uf = new WeightedQuickUnionUF(n * n + 2);
-        ufFull = new WeightedQuickUnionUF(n * n + 1);
+        this.virtualTop = n * n;
+        this.virtualBottom = n * n + 1;
 
-        top = n * n;
-        for (int i = 0; i < n; i++) {
-            uf.union(i, top);
-            ufFull.union(i, top);
-        }
-
-        bottom = n * n + 1;
-        for (int i = 0; i < n; i++) {
-            uf.union(n * (n - 1) - i, bottom);
-        }
-
+        openCount = 0;
     }
 
-    private void exceptionCheck(int r, int c) {
-        if (r < 1 || c < 1 || n < r || n < c) {
+    // Converts (row, col) to 1D index
+    private int toIndex(int row, int col) {
+        return (row - 1) * n + (col - 1);
+    }
+
+    private void validate(int row, int col) {
+        if (row < 1 || col < 1 || row > n || col > n) {
             throw new IllegalArgumentException();
         }
     }
 
-    // opens the site (row, col) if it is not open already
+    // Opens site
     public void open(int row, int col) {
-        exceptionCheck(row, col);
-        int index = (row - 1) * n + col - 1;
-        if (open[index]) {
-            return;
-        }
+        validate(row, col);
+        int index = toIndex(row, col);
+
+        if (open[index]) return;
+
         open[index] = true;
         openCount++;
 
-        connect(row, col, row - 1, col);
-        connect(row, col, row + 1, col);
-        connect(row, col, row, col - 1);
-        connect(row, col, row, col + 1);
-    }
-
-    private void connect(int row1, int col1, int row2, int col2) {
-        if (row2 < 1 || col2 < 1 || n < row2 || n < col2) {
-            return;
+        // first row → connect to virtual top
+        if (row == 1) {
+            uf.union(index, virtualTop);
+            uf_backwash.union(index, virtualTop);
         }
 
-        if (isOpen(row2, col2)) {
-            int index1 = (row1 - 1) * n + col1 - 1;
-            int index2 = (row2 - 1) * n + col2 - 1;
-            uf.union(index1, index2);
-            ufFull.union(index1, index2);
+        // last row → connect to virtual bottom (only in uf)
+        if (row == n) {
+            uf.union(index, virtualBottom);
+        }
+
+        // connect to neighbors
+        connectIfOpen(row, col, row - 1, col); // up
+        connectIfOpen(row, col, row + 1, col); // down
+        connectIfOpen(row, col, row, col - 1); // left
+        connectIfOpen(row, col, row, col + 1); // right
+    }
+
+    private void connectIfOpen(int r1, int c1, int r2, int c2) {
+        // out of bounds → ignore
+        if (r2 < 1 || c2 < 1 || r2 > n || c2 > n) return;
+
+        if (isOpen(r2, c2)) {
+            int idx1 = toIndex(r1, c1);
+            int idx2 = toIndex(r2, c2);
+            uf.union(idx1, idx2);
+            uf_backwash.union(idx1, idx2);
         }
     }
 
-    // is the site (row, col) open?
+    // is site open?
     public boolean isOpen(int row, int col) {
-        exceptionCheck(row, col);
-        int index = (row - 1) * n + col - 1;
-        return open[index];
+        validate(row, col);
+        return open[toIndex(row, col)];
     }
 
-    // is the site (row, col) full?
+    // is site full?
     public boolean isFull(int row, int col) {
-        exceptionCheck(row, col);
-        int index = (row - 1) * n + col - 1;
-        return ufFull.find(index) == ufFull.find(top);
+        validate(row, col);
+        int idx = toIndex(row, col);
+        return uf_backwash.find(idx) == uf_backwash.find(virtualTop);
     }
 
-    // returns the number of open sites
     public int numberOfOpenSites() {
         return openCount;
     }
 
-    // does the system percolate?
     public boolean percolates() {
-        return uf.find(top) == uf.find(bottom);
-    }
-
-    // test client (optional)
-    public static void main(String[] args) {
-        Percolation p = new Percolation(3);
-
-        p.open(1, 1);
-        System.out.println("percolates? " + p.percolates());   // false
-
-        p.open(2, 1);
-        System.out.println("percolates? " + p.percolates());   // false
-
-        p.open(3, 1);
-        System.out.println("percolates? " + p.percolates());   // true
-
-        System.out.println("# of open sites = " + p.numberOfOpenSites());  // 3
-
-        System.out.println("isFull(3,1) = " + p.isFull(3, 1));  // true
+        return uf.find(virtualTop) == uf.find(virtualBottom);
     }
 }
